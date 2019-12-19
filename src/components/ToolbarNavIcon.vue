@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import { useCards } from "@/store/modules/cards";
+
 import { reactive, computed } from "@vue/composition-api";
 import { useRouter, router } from "@/composables/route";
 
@@ -30,6 +32,7 @@ export default {
 
   setup(props, context) {
     const { inGame, router } = useRouter(context);
+    const { resetDeck } = useCards();
     const currentIcon = computed(() => {
       // console.log(inGame.value);
       if (inGame.value) return "backIcon";
@@ -38,15 +41,14 @@ export default {
     });
 
     function onClick() {
-      // context.emit("click");
-      console.log("hmmm", router, currentIcon);
       switch (currentIcon.value) {
         case "backIcon":
           router.push("/");
+          resetDeck();
           break;
         case "menuIcon":
         case "closeIcon":
-
+          openMenu();
         default:
           break;
       }

@@ -3,7 +3,7 @@
     <!-- {{ currentCard }} <br />
     {{ scoreStreak }} -->
 
-    <div class="flex my-6">
+    <!-- <div class="flex my-6">
       <div class="w-1/2 flex">
         <button
           @click="nextCard('left')"
@@ -23,8 +23,11 @@
       <button class="border border-gray-700 px-6 py-2" @click="shuffleCards()">
         shufleeee
       </button>
-    </div>
-    <div class="flex flex-grow items-start justify-center">
+    </div> -->
+    <swipe-confirmation
+      :percentage-complete="offsetPercentage"
+    ></swipe-confirmation>
+    <div class="flex flex-grow items-center justify-center">
       <base-card :styles="cardStyles" ref="cardRef" :small="false"></base-card>
     </div>
   </div>
@@ -33,6 +36,7 @@
 <script>
 import { useCards } from "@/store/modules/cards";
 import BaseCard from "../components/BaseCard.vue";
+import SwipeConfirmation from "@/components/SwipeConfirmation.vue";
 import { ref, onMounted, computed } from "@vue/composition-api";
 import { useDrag } from "@/composables/useDrag";
 // import { useCards } from "@/composables/cards";
@@ -41,7 +45,8 @@ export default {
   name: "RedOrBlack",
 
   components: {
-    BaseCard
+    BaseCard,
+    SwipeConfirmation
   },
 
   setup() {
@@ -54,7 +59,7 @@ export default {
       cards,
       scoreStreak
     } = useCards();
-    const { offsetPercentage } = useDrag(cardRef, nextCard); //must be declared here and is reassigned in onMounted
+    const { offsetPercentage } = useDrag(cardRef, nextCard);
 
     const cardStyles = computed(() => {
       const transform = {
@@ -64,6 +69,9 @@ export default {
       };
 
       return [transform];
+    });
+    const dropletStyles = computed(() => {
+      return [{ transform: `translateX(${offsetPercentage}%)` }];
     });
 
     if (cards.value.length === 0) {

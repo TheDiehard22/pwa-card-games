@@ -1,6 +1,6 @@
 <template>
   <div class="toolbar px-4">
-    <toolbar-nav-icon @click="openMenu()"></toolbar-nav-icon>
+    <toolbar-nav-icon></toolbar-nav-icon>
 
     <span class="toolbar-title">{{ routeTitle }}</span>
     <div class="spacer"></div>

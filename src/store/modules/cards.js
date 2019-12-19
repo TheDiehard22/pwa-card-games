@@ -27,13 +27,14 @@ const suits = { "♥": "red", "♦": "red", "♠": "black", "♣": "black" };
 
 export const key = Symbol("CardsStore");
 
-const initialState = {
+const initialState = () => ({
   cards: [],
   playedCards: [],
   scoreStreak: 0,
   cardIdx: 0
-};
-export const state = reactive(initialState);
+});
+// console.log(object);
+export let state = reactive(initialState());
 
 export const computeds = {
   currentCard: computed(() => state.cards[state.cardIdx]),
@@ -97,6 +98,13 @@ export const actions = {
     // console.log(state.playedCards);
     state.playedCards.push(computeds.currentCard.value);
     state.cardIdx++;
+  },
+
+  resetDeck() {
+    const s = initialState();
+    Object.keys(s).forEach(key => {
+      state[key] = s[key];
+    });
   }
 };
 

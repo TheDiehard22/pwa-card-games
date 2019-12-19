@@ -1,0 +1,18 @@
+.droplet {
+  width: 100%;
+  height: 100%;
+  @apply absolute left-0 top-0;
+  @apply flex;
+
+  &--red {
+    @apply bg-red-600 text-red-900 justify-end;
+  }
+  &--black {
+    @apply bg-gray-900 justify-start;
+  }
+
+  &-action-name {
+    @apply mt-10 mx-20;
+    @apply text-4xl font-bold uppercase tracking-wider;
+  }
+}

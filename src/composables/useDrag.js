@@ -19,7 +19,7 @@ export function useDrag(el = ref(null), swipeCb = null) {
   let distance = ref(0);
 
   function swipeAction() {
-    const swipeDirection = offsetPercentage.value > 0 ? "right" : "left";
+    const swipeDirection = offsetPercentage.value >= 0 ? "right" : "left";
     // convert negative number to positive
     if (Math.abs(offsetPercentage.value) > minimalPercentage) {
       // execute callback when you swiped enough righ or left
@@ -43,12 +43,12 @@ export function useDrag(el = ref(null), swipeCb = null) {
         centerX.value = e.center.x;
         distance.value = e.distance;
 
-        console.log(
-          e.type,
-          e.distance,
-          `center - x: ${e.center.x} y: ${e.center.y}`
-          // e
-        );
+        // console.log(
+        //   e.type,
+        //   e.distance,
+        //   `center - x: ${e.center.x} y: ${e.center.y}`
+        //   // e
+        // );
       });
 
       hammer.on("panend", e => {
