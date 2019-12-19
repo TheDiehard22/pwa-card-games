@@ -18,6 +18,6 @@ module.exports = {
       .use("vue-svg-loader")
       .loader("vue-svg-loader");
 
-    console.log(svgRule.uses);
+    // console.log(svgRule.uses);
   }
 };
