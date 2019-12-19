@@ -1,0 +1,9 @@
+.backdrop {
+  transform: translateY(var(--backdrop-top));
+  // margin-top: var(--backdrop-top);
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  top: 0;
+  transition: ease-in-out 0.3s all;
+  @apply fixed h-full w-full shadow-md text-white;
+}

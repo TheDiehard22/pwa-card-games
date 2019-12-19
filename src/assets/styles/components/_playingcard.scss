@@ -1,0 +1,48 @@
+.playingcard {
+  height: 250px;
+  width: 180px;
+  @apply flex items-center justify-center relative bg-white rounded p-2 shadow-md;
+
+  &--small {
+    height: 115px;
+    width: 80px;
+  }
+
+  &--red {
+    @apply text-red-700;
+  }
+
+  &--back {
+    @apply flex shadow-xl;
+  }
+
+  &-suit {
+    font-size: 1rem;
+    @apply absolute;
+
+    &--top {
+      top: 0.5rem;
+      left: 0.5rem;
+    }
+    &--bottom {
+      bottom: 0.5rem;
+      right: 0.5rem;
+    }
+  }
+
+  &-rank {
+    @apply font-bold text-2xl;
+  }
+
+  &-background {
+    background-image: url("~@/assets/svg/card-bg.svg");
+    @apply w-full h-full rounded;
+  }
+}
+
+.playfield {
+  min-height: 163px;
+  .playingcard:not(:first-child) {
+    margin-left: -20px;
+  }
+}

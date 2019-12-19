@@ -1,0 +1,13 @@
+.toolbar {
+  height: var(--toolbar-height);
+  @apply flex items-center;
+
+  &-hamburger,
+  &-dots {
+    height: 24px;
+  }
+
+  &-title {
+    @apply font-medium text-lg;
+  }
+}

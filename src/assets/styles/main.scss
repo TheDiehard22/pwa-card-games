@@ -1,0 +1,22 @@
+@tailwind base;
+@import "layout/backdrop";
+@import "layout/menu";
+@import "layout/toolbar";
+@tailwind components;
+@import "components/playingcard";
+
+@tailwind utilities;
+
+:root {
+  --toolbar-height: 54px;
+  --backdrop-top: var(--toolbar-height);
+}
+
+body {
+  height: 100vh;
+  @apply bg-primary text-text font-default;
+}
+
+.spacer {
+  @apply flex-grow;
+}

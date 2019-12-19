@@ -1,0 +1,15 @@
+{
+  "include": [
+    "./src/components/**/*",
+    "./src/composables/**/*",
+    "./src/views/**/*",
+    "./src/store/**/*",
+    "./"
+  ],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}
