@@ -1,29 +1,5 @@
 <template>
   <div class="home flex flex-col h-full p-4">
-    <!-- {{ currentCard }} <br />
-    {{ scoreStreak }} -->
-
-    <!-- <div class="flex my-6">
-      <div class="w-1/2 flex">
-        <button
-          @click="nextCard('left')"
-          class="border border-gray-700 flex-grow"
-        >
-          Rood
-        </button>
-      </div>
-      <div class="w-1/2 flex">
-        <button
-          @click="nextCard('right')"
-          class="border border-gray-700 flex-grow"
-        >
-          Zwart
-        </button>
-      </div>
-      <button class="border border-gray-700 px-6 py-2" @click="shuffleCards()">
-        shufleeee
-      </button>
-    </div> -->
     <swipe-confirmation
       :percentage-complete="offsetPercentage"
     ></swipe-confirmation>
