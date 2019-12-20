@@ -10,6 +10,7 @@ export function useDrag(el = ref(null), swipeCb = null) {
   const minimalPercentage = 70;
   const offsetPercentage = computed(() => (distance.value / maxDistance) * 100);
   let distance = ref(0);
+  let panEnded = ref(false);
 
   function swipeAction() {
     const swipeDirection = offsetPercentage.value >= 0 ? "right" : "left";
@@ -34,11 +35,13 @@ export function useDrag(el = ref(null), swipeCb = null) {
       hammer.on(
         "panmove",
         throttle(e => {
-          distance.value = e.deltaX;
+          if (!panEnded) distance.value = e.deltaX;
+          panEnded = false;
         }, 30)
       );
 
       hammer.on("panend", e => {
+        panEnded = true;
         swipeAction();
         distance.value = 0;
         console.log("pan ended");
