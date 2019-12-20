@@ -1,7 +1,8 @@
 module.exports = {
   pwa: {
     themeColor: "#3fad4d",
-    appleMobileWebAppCapable: "yes"
+    appleMobileWebAppCapable: "yes",
+    name: "BlazeGames"
   },
 
   chainWebpack: config => {
