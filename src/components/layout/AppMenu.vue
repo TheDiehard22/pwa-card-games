@@ -26,16 +26,16 @@
         in a row
       </span>
     </div>
-    <div class="flex">
-      <template v-for="(card, index) in cardsOnTable">
+    <transition-group tag="div" class="flex" name="card">
+      <template v-for="card in cardsOnTable">
         <base-card
-          :key="index"
+          :key="`${card.suit}-${card.rank}`"
           :suit="card.suit"
           :rank="card.rank"
           :color="card.color"
         ></base-card>
       </template>
-    </div>
+    </transition-group>
   </div>
 </template>
 
@@ -79,3 +79,30 @@ export default {
   }
 };
 </script>
+
+<style lang="scss">
+.card {
+  &-enter {
+    opacity: 0;
+    transform: perspective(500px) translateZ(200px) translateX(40px);
+  }
+  &-leave-to {
+    transform: translateX(-40px);
+    opacity: 0;
+    position: absolute;
+  }
+
+  &-enter-active {
+    transition: ease-in transform 0.6s, opacity linear 0.15s;
+  }
+
+  &-leave-active {
+    transition: ease-in transform 1s, opacity linear 0.6s;
+    position: absolute !important;
+  }
+
+  &-move {
+    transition: transform linear 0.5s;
+  }
+}
+</style>

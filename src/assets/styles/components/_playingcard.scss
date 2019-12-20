@@ -3,6 +3,10 @@
   width: 180px;
   @apply flex items-center justify-center relative bg-white rounded p-2 shadow-md;
 
+  &:not(.playingcard--back) {
+    transition: all linear 0.3s;
+  }
+
   &--small {
     height: 115px;
     width: 80px;

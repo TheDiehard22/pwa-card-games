@@ -21,6 +21,11 @@ body {
   @apply bg-primary text-text font-default;
 }
 
+.app {
+  max-width: 100%;
+  @apply h-full w-full overflow-hidden;
+}
+
 .spacer {
   @apply flex-grow;
 }

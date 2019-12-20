@@ -40,10 +40,8 @@ export function useNotifications() {
       const idx = state.notifications.findIndex(({ id: _id }) => {
         return _id === id;
       });
-      console.log("?", idx);
       state.notifications.splice(idx, 1);
     }
-    // state.notifications.delete(notification.id);
   }
 
   return {
