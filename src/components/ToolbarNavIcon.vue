@@ -1,5 +1,5 @@
 <template>
-  <div class="toolbar-icon mr-6" v-ripple>
+  <div class="toolbar-icon mr-4" v-ripple>
     <transition name="icon-swap" class="relative">
       <component
         :key="currentIcon"

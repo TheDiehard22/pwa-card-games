@@ -1,5 +1,5 @@
 <template>
-  <div class="toolbar px-4">
+  <div class="toolbar px-2">
     <toolbar-nav-icon></toolbar-nav-icon>
 
     <span class="toolbar-title">{{ routeTitle }}</span>

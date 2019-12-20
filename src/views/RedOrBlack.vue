@@ -1,9 +1,11 @@
 <template>
   <div class="home flex flex-col h-full p-4">
     <swipe-confirmation
+      class="z-1"
       :percentage-complete="offsetPercentage"
     ></swipe-confirmation>
     <div class="flex flex-grow items-center justify-center">
+      <!-- <button class="z-10" @click="nextCard('right')">Blackkkk</button> -->
       <base-card :styles="cardStyles" ref="cardRef" :small="false"></base-card>
     </div>
   </div>
@@ -13,7 +15,7 @@
 import { useCards } from "@/store/modules/cards";
 import BaseCard from "../components/BaseCard.vue";
 import SwipeConfirmation from "@/components/SwipeConfirmation.vue";
-import { ref, onMounted, computed } from "@vue/composition-api";
+import { ref, onMounted, computed, watch } from "@vue/composition-api";
 import { useDrag } from "@/composables/useDrag";
 
 export default {
@@ -32,10 +34,11 @@ export default {
       nextCard,
       buildDeck,
       cards,
-      scoreStreak
+      scoreStreak,
+      cardsLeft,
+      resetDeck
     } = useCards();
     const { offsetPercentage } = useDrag(cardRef, nextCard);
-
     const cardStyles = computed(() => {
       const transform = {
         transform: `translateX(${
@@ -45,11 +48,19 @@ export default {
 
       return [transform];
     });
-    const dropletStyles = computed(() => {
-      return [{ transform: `translateX(${offsetPercentage}%)` }];
+    const cardsLength = watch(cardsLeft, () => {
+      console.log("object", cardsLeft);
+      if (cardsLeft.value === 0) {
+        console.log("HA");
+        resetDeck();
+        buildDeck();
+        shuffleCards();
+        // show Modal
+      }
     });
 
     if (cards.value.length === 0) {
+      // build the deck on game start
       buildDeck();
       shuffleCards();
     }
@@ -63,7 +74,9 @@ export default {
       cardRef,
       cardStyles,
       offsetPercentage,
-      scoreStreak
+      scoreStreak,
+      cardsLeft,
+      resetDeck
     };
   }
 };
