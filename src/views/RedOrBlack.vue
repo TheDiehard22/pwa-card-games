@@ -15,7 +15,6 @@ import BaseCard from "../components/BaseCard.vue";
 import SwipeConfirmation from "@/components/SwipeConfirmation.vue";
 import { ref, onMounted, computed } from "@vue/composition-api";
 import { useDrag } from "@/composables/useDrag";
-// import { useCards } from "@/composables/cards";
 
 export default {
   name: "RedOrBlack",

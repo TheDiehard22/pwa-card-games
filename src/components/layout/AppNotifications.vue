@@ -5,7 +5,12 @@
         <div class="flex justify-end" :key="notification.id">
           <div
             class="notification-bubble"
-            :class="[`notification-bubble--${notification.type}`]"
+            :class="[
+              {
+                'notification-bubble--correct': notification.type === 'correct',
+                'notification-bubble--wrong': notification.type === 'wrong'
+              }
+            ]"
           >
             {{ notification.message }}
           </div>

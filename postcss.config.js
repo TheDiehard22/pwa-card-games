@@ -4,7 +4,11 @@ const postcssPurgecss = require(`@fullhuman/postcss-purgecss`);
 
 const purgecss = postcssPurgecss({
   // Specify the paths to all of the template files in your project.
-  content: ["./public/**/*.html", "./src/**/*.vue"],
+  content: [
+    "./public/**/*.html",
+    "./src/**/*.vue",
+    "./src/assets/styles/**/*.scss"
+  ],
   // Include any special characters you're using in this regular expression.
   // See: https://tailwindcss.com/docs/controlling-file-size/#understanding-the-regex
   defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || [],
