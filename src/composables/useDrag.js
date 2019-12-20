@@ -5,15 +5,9 @@ import { computed, ref, toRefs, onMounted } from "@vue/composition-api";
 export function useDrag(el = ref(null), swipeCb = null) {
   let hammer;
 
-  const maxDistance = 150;
+  const maxDistance = 130;
   const minimalPercentage = 80;
-  const offsetPercentage = computed(() => {
-    let value =
-      centerX.value >= startCenterX.value
-        ? (distance.value / maxDistance) * 100
-        : -(distance.value / maxDistance) * 100;
-    return value;
-  });
+  const offsetPercentage = computed(() => (distance.value / maxDistance) * 100);
   let startCenterX = ref(null);
   let centerX = ref(0);
   let distance = ref(0);
@@ -26,11 +20,11 @@ export function useDrag(el = ref(null), swipeCb = null) {
       if (!swipeCb) {
         return console.warn("No callback received.");
       }
-      console.log(swipeDirection);
       swipeCb(swipeDirection);
     }
   }
 
+  // TODO: Implement lodash throttling for better performance
   onMounted(() => {
     el = unwrap(el);
 
@@ -38,23 +32,13 @@ export function useDrag(el = ref(null), swipeCb = null) {
       el = el.$el;
       hammer = new Hammer(el, { threshold: 0 });
 
-      hammer.on("panleft panright", e => {
-        if (!startCenterX.value) startCenterX.value = e.center.x;
-        centerX.value = e.center.x;
-        distance.value = e.distance;
-
-        // console.log(
-        //   e.type,
-        //   e.distance,
-        //   `center - x: ${e.center.x} y: ${e.center.y}`
-        //   // e
-        // );
+      hammer.on("panmove", e => {
+        distance.value = e.deltaX;
       });
 
       hammer.on("panend", e => {
         swipeAction();
         distance.value = 0;
-        startCenterX.value = null;
         console.log("pan ended");
       });
     }

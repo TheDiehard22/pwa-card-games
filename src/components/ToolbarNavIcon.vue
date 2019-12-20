@@ -1,11 +1,13 @@
 <template>
   <transition name="icon-swap" class="relative">
-    <component
-      :key="currentIcon"
-      :is="currentIcon"
-      class="toolbar-hamburger mr-6"
-      @click="onClick()"
-    ></component>
+    <div class="toolbar-icon mr-6">
+      <component
+        :key="currentIcon"
+        :is="currentIcon"
+        class="toolbar-hamburger"
+        @click="onClick()"
+      ></component>
+    </div>
   </transition>
 </template>
 
@@ -36,6 +38,7 @@ export default {
     const currentIcon = computed(() => {
       // console.log(inGame.value);
       if (inGame.value) return "backIcon";
+      // else if () check if menu is open with useMenu hook
 
       return "menuIcon";
     });

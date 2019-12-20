@@ -2,6 +2,12 @@
   height: var(--toolbar-height);
   @apply flex items-center;
 
+  &-icon {
+    height: 32px;
+    width: 32px;
+    @apply relative flex items-center justify-center;
+  }
+
   &-hamburger,
   &-dots {
     height: 24px;

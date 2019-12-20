@@ -5,10 +5,10 @@
   @apply flex;
 
   &--red {
-    @apply bg-red-600 text-red-900 justify-end;
+    @apply bg-red-600 justify-end;
   }
   &--black {
-    @apply bg-gray-900 justify-start;
+    @apply bg-black justify-start;
   }
 
   &-action-name {

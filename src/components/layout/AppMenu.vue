@@ -13,12 +13,16 @@
       </li>
     </ul>
   </nav>
-  <div class="playfield flex flex-col px-4 py-2" v-else>
-    <div class="flex mb-2">
+  <div class="playfield flex flex-col px-4 pt-2 pb-4" v-else>
+    <div class="flex justify-between mb-2">
       <span>
-        Nog
         <b>{{ cardsLeft }}</b>
-        kaarten over.
+        cards left
+      </span>
+
+      <span>
+        <b class="font-bold">{{ scoreStreak }}</b>
+        in a row
       </span>
     </div>
     <div class="flex">
