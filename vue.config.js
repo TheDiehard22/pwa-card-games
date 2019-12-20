@@ -1,15 +1,21 @@
 module.exports = {
   pwa: {
+    name: "BlazeGames",
     themeColor: "#3fad4d",
     appleMobileWebAppCapable: "yes",
-    name: "BlazeGames"
+    appleMobileWebAppStatusBarStyle: "black",
+    manifestOptions: {
+      short_name: "BlazeGames",
+      display: "standalone",
+      background_color: "#3fad4d",
+      orientation: "landscape"
+    }
   },
 
   chainWebpack: config => {
     const svgRule = config.module.rule("svg");
     const inlineSvgRule = config.module.rule("inline-svg");
 
-    // svgRule.uses.clear();
     svgRule.exclude.add(/inline\.(.*)\.svg/).end();
     inlineSvgRule
       .test(/inline\.(.*)\.svg/)
