@@ -5,7 +5,7 @@
       :percentage-complete="offsetPercentage"
     ></swipe-confirmation>
     <div class="flex flex-grow items-center justify-center">
-      <!-- <button class="z-10" @click="nextCard('right')">Blackkkk</button> -->
+      <button class="z-10" @click="nextCard('right')">Blackkkk</button>
       <base-card :styles="cardStyles" ref="cardRef" :small="false"></base-card>
     </div>
   </div>
@@ -49,9 +49,7 @@ export default {
       return [transform];
     });
     const cardsLength = watch(cardsLeft, () => {
-      console.log("object", cardsLeft);
       if (cardsLeft.value === 0) {
-        console.log("HA");
         resetDeck();
         buildDeck();
         shuffleCards();

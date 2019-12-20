@@ -1,6 +1,7 @@
 import Hammer from "hammerjs";
 import { unwrap } from "./utils";
 import { computed, ref, toRefs, onMounted } from "@vue/composition-api";
+import { throttle } from "lodash-es";
 
 export function useDrag(el = ref(null), swipeCb = null) {
   let hammer;
@@ -30,9 +31,12 @@ export function useDrag(el = ref(null), swipeCb = null) {
       el = el.$el;
       hammer = new Hammer(el, { threshold: 0 });
 
-      hammer.on("panmove", e => {
-        distance.value = e.deltaX;
-      });
+      hammer.on(
+        "panmove",
+        throttle(e => {
+          distance.value = e.deltaX;
+        }, 30)
+      );
 
       hammer.on("panend", e => {
         swipeAction();
