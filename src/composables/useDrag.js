@@ -6,10 +6,8 @@ export function useDrag(el = ref(null), swipeCb = null) {
   let hammer;
 
   const maxDistance = 130;
-  const minimalPercentage = 80;
+  const minimalPercentage = 70;
   const offsetPercentage = computed(() => (distance.value / maxDistance) * 100);
-  let startCenterX = ref(null);
-  let centerX = ref(0);
   let distance = ref(0);
 
   function swipeAction() {

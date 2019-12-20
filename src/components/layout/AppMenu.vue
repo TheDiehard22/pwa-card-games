@@ -5,6 +5,7 @@
         class="menu-list-item"
         v-for="(item, index) in menuItems"
         :key="index"
+        v-ripple
       >
         <router-link class="menu-list-link" :to="item.to">
           <span class="block font-medium">{{ item.label }}</span>

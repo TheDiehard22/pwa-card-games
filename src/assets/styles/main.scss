@@ -15,6 +15,9 @@
 
 body {
   height: 100vh;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
   @apply bg-primary text-text font-default;
 }
 

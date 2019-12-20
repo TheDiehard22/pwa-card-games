@@ -7,6 +7,7 @@ import {
   readonly
 } from "@vue/composition-api";
 import Vue from "vue";
+import { useNotifications } from "@/composables/useNotification.js";
 
 const ranks = [
   "A",
@@ -33,7 +34,7 @@ const initialState = () => ({
   scoreStreak: 0,
   cardIdx: 0
 });
-// console.log(object);
+
 export let state = reactive(initialState());
 
 export const computeds = {
@@ -77,6 +78,7 @@ export const actions = {
   nextCard(option) {
     // right or left
     const cardColor = computeds.currentCard.value.color; // red or black
+    const { createNotification } = useNotifications();
     let chosenColor;
 
     switch (option) {
@@ -87,12 +89,15 @@ export const actions = {
         chosenColor = "black";
         break;
     }
-    console.log(chosenColor, cardColor);
+
     if (chosenColor === cardColor) {
       // CORRECT
       state.scoreStreak += 1;
+      createNotification({ type: "correct", message: "Eyyyyyyy sickk" });
+      // show notification
     } else {
       // state.cardsOnTable.slice(0);
+      createNotification({ type: "wrong", message: "Haha n00b" });
       state.scoreStreak = 0;
     }
     // console.log(state.playedCards);

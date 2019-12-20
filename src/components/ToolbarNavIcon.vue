@@ -1,14 +1,14 @@
 <template>
-  <transition name="icon-swap" class="relative">
-    <div class="toolbar-icon mr-6">
+  <div class="toolbar-icon mr-6" v-ripple>
+    <transition name="icon-swap" class="relative">
       <component
         :key="currentIcon"
         :is="currentIcon"
         class="toolbar-hamburger"
         @click="onClick()"
       ></component>
-    </div>
-  </transition>
+    </transition>
+  </div>
 </template>
 
 <script>

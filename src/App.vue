@@ -4,6 +4,7 @@
     <app-backdrop>
       <router-view />
     </app-backdrop>
+    <app-notifications></app-notifications>
     <!-- <button @click="capacity++">eyyyyyy</button>
     {{ capacity }} -->
   </div>
@@ -12,16 +13,20 @@
 <script>
 import AppBackground from "@/components/layout/AppBackground";
 import AppBackdrop from "@/components/layout/AppBackdrop";
+import AppNotifications from "@/components/layout/AppNotifications";
 import { provideCards } from "@/store/modules/cards";
+import { provideNotifcations } from "@/store/modules/notification";
 
 export default {
   components: {
     AppBackground,
-    AppBackdrop
+    AppBackdrop,
+    AppNotifications
   },
 
   setup() {
     provideCards();
+    provideNotifcations();
   }
 };
 </script>

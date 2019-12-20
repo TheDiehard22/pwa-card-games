@@ -30,20 +30,20 @@ export default {
     });
     let playareaRef = ref(null);
 
-    watch(() => {
-      if (isOpenn) toggleMenu();
-    });
-
-    watch(inGame, () => {
-      toggleMenu(true);
-    });
-
     onMounted(() => {
       playareaRef = unwrap(playareaRef);
       const combinedHeight =
         document.querySelector(".menu, .playfield").clientHeight + 54;
-      const windowHeight = window.outerHeight;
+      const windowHeight = window.innerHeight;
       playareaRef.style.height = `${windowHeight - combinedHeight}px`;
+
+      watch(() => {
+        if (isOpenn) toggleMenu();
+      });
+
+      watch(inGame, () => {
+        toggleMenu(true);
+      });
     });
 
     function toggleMenu(recalculate = false) {
