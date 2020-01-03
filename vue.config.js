@@ -8,7 +8,7 @@ module.exports = {
       short_name: "BlazeGames",
       display: "standalone",
       background_color: "#3fad4d",
-      orientation: "landscape"
+      orientation: "portrait"
     }
   },
 
