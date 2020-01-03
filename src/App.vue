@@ -15,7 +15,6 @@ import AppBackground from "@/components/layout/AppBackground";
 import AppBackdrop from "@/components/layout/AppBackdrop";
 import AppNotifications from "@/components/layout/AppNotifications";
 import { provideCards } from "@/store/modules/cards";
-import { provideNotifcations } from "@/store/modules/notification";
 
 export default {
   components: {
@@ -26,7 +25,6 @@ export default {
 
   setup() {
     provideCards();
-    provideNotifcations();
   }
 };
 </script>

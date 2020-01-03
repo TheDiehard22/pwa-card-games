@@ -1,16 +1,18 @@
 <template>
   <div>
     <div ref="confirmLeftRef" class="droplet droplet--red">
-      <span class="droplet-action-name">Red</span>
+      <span class="droplet-action-name">{{ currentOption.left }}</span>
     </div>
     <div ref="confirmRightRef" class="droplet droplet--black">
-      <span class="droplet-action-name ">Black</span>
+      <span class="droplet-action-name">{{ currentOption.right }}</span>
     </div>
   </div>
 </template>
 
 <script>
 import anime from "animejs/lib/anime.es.js";
+import { throttle } from "lodash-es";
+import { useCards } from "@/store/modules/cards";
 import {
   ref,
   onMounted,
@@ -31,6 +33,7 @@ export default {
   setup(props) {
     const confirmLeftRef = ref(null);
     const confirmRightRef = ref(null);
+    const { currentOption } = useCards();
     let tlLeft = anime.timeline({
       autoplay: false
     });
@@ -38,13 +41,19 @@ export default {
       autoplay: false
     });
     let tlDuration = 1000;
-    // const seekPercentage = ref(0);
+
+    const seekTl = throttle(timeline => {
+      timeline.seek(tlDuration * (Math.abs(props.percentageComplete) / 100));
+    }, 30);
+
     watch(() => {
       if (props.percentageComplete <= 0) {
-        tlLeft.seek(tlDuration * (Math.abs(props.percentageComplete) / 100));
+        tlRight.seek(0);
+        seekTl(tlLeft);
       }
       if (props.percentageComplete >= 0) {
-        tlRight.seek(tlDuration * (Math.abs(props.percentageComplete) / 100));
+        tlLeft.seek(0);
+        seekTl(tlRight);
       }
     });
 
@@ -65,10 +74,8 @@ export default {
       tlDuration = tlLeft.duration;
     });
 
-    return { confirmLeftRef, confirmRightRef };
+    return { confirmLeftRef, confirmRightRef, currentOption };
     // const animation =
   }
 };
 </script>
-
-<style lang="scss" scoped></style>

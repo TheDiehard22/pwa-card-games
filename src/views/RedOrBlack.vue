@@ -4,8 +4,11 @@
       class="z-1"
       :percentage-complete="offsetPercentage"
     ></swipe-confirmation>
-    <div class="flex flex-grow items-center justify-center">
+    <div class="flex flex-col flex-grow items-center">
       <!-- <button class="z-10" @click="nextCard('right')">Blackkkk</button> -->
+      <span class="game-question text-2xl font-bold mb-6 mt-2">
+        {{ currentOption.question }}
+      </span>
       <base-card :styles="cardStyles" ref="cardRef" :small="false"></base-card>
     </div>
   </div>
@@ -17,6 +20,7 @@ import BaseCard from "../components/BaseCard.vue";
 import SwipeConfirmation from "@/components/SwipeConfirmation.vue";
 import { ref, onMounted, computed, watch } from "@vue/composition-api";
 import { useDrag } from "@/composables/useDrag";
+import { useRouter } from "@/composables/route.js";
 
 export default {
   name: "RedOrBlack",
@@ -26,8 +30,8 @@ export default {
     SwipeConfirmation
   },
 
-  setup() {
-    const cardRef = ref({}); // this is a template ref
+  setup(props, context) {
+    const cardRef = ref(null); // this is a template ref
     const {
       currentCard,
       shuffleCards,
@@ -36,8 +40,11 @@ export default {
       cards,
       scoreStreak,
       cardsLeft,
-      resetDeck
+      resetDeck,
+      setGameMode,
+      currentOption
     } = useCards();
+    const { route } = useRouter(context);
     const { offsetPercentage } = useDrag(cardRef, nextCard);
     const cardStyles = computed(() => {
       const transform = {
@@ -57,11 +64,9 @@ export default {
       }
     });
 
-    if (cards.value.length === 0) {
-      // build the deck on game start
-      buildDeck();
-      shuffleCards();
-    }
+    watch(route, (val, oldVal) => {
+      setGameMode(route.value.name);
+    });
 
     return {
       cards,
@@ -74,7 +79,8 @@ export default {
       offsetPercentage,
       scoreStreak,
       cardsLeft,
-      resetDeck
+      resetDeck,
+      currentOption
     };
   }
 };

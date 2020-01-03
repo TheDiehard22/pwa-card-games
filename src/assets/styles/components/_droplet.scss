@@ -2,13 +2,13 @@
   width: 100%;
   height: 100%;
   @apply absolute left-0 top-0;
-  @apply flex;
+  @apply flex justify-center;
 
   &--red {
-    @apply bg-red-600 justify-end;
+    @apply bg-red-600;
   }
   &--black {
-    @apply bg-black justify-start;
+    @apply bg-black;
   }
 
   &-action-name {

@@ -24,7 +24,6 @@ export function useDrag(el = ref(null), swipeCb = null) {
     }
   }
 
-  // TODO: Implement lodash throttling for better performance
   onMounted(() => {
     el = unwrap(el);
 
@@ -37,7 +36,7 @@ export function useDrag(el = ref(null), swipeCb = null) {
         throttle(e => {
           if (!panEnded) distance.value = e.deltaX;
           panEnded = false;
-        }, 30)
+        }, 20)
       );
 
       hammer.on("panend", e => {

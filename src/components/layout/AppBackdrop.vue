@@ -10,7 +10,7 @@
 import { useEventBusListener } from "@/composables/useEventBusListener.js";
 import { onMounted, ref, computed, watch } from "@vue/composition-api";
 import { useRouter } from "@/composables/route";
-import { unwrap } from "../../composables/utils";
+import { unwrap } from "@/composables/utils";
 
 export default {
   name: "AppBackdrop",

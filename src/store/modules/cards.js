@@ -25,25 +25,53 @@ const ranks = [
   "K"
 ];
 const suits = { "♥": "red", "♦": "red", "♠": "black", "♣": "black" };
-
-export const key = Symbol("CardsStore");
-
+const options = [
+  { question: "Red or Black", left: "Red", right: "Black" },
+  { question: "Higher or Lower", left: "Higher", right: "Lower" },
+  { question: "In or Out", left: "In", right: "Out" },
+  {
+    question: "Pick a Suit",
+    topleft: "♥",
+    topright: "♠",
+    bottomleft: "♣",
+    bottomright: "♦"
+  }
+];
 const initialState = () => ({
   cards: [],
   playedCards: [],
-  scoreStreak: 0,
-  cardIdx: 0
+  scoreStreak: 0, // given per correct card
+  winStreak: 0, // given per correct set
+  cardIdx: 0,
+  gamemode: undefined //redOrBlack, pickASuit
 });
 
 export let state = reactive(initialState());
 
 export const computeds = {
   currentCard: computed(() => state.cards[state.cardIdx]),
-  cardsOnTable: computed(() =>
-    state.playedCards.slice(Math.max(state.playedCards.length - 5, 0))
-  ),
-  cardsLeft: computed(() => state.cards.length - state.playedCards.length)
+  cardsOnTable: computed(() => {
+    if (state.gamemode === "redOrBlack") {
+      return state.playedCards.slice(Math.max(state.playedCards.length - 5, 0));
+    } else {
+      return state.playedCards.slice(
+        Math.max(state.playedCards.length - state.scoreStreak, 0)
+      );
+    }
+  }),
+  cardsLeft: computed(() => state.cards.length - state.playedCards.length),
+  currentOption: computed(() => {
+    if (state.gamemode === "redOrBlack") {
+      return options[0];
+    } else if (state.gamemode === "pickASuit") {
+      return options[state.scoreStreak];
+    }
+  })
 };
+
+function isHigherOrLower(answer) {}
+function isInOrOut(answer) {}
+function chooseSuit(answer) {}
 
 export const actions = {
   buildDeck() {
@@ -63,7 +91,7 @@ export const actions = {
     }
   },
 
-  shuffleCards(payload) {
+  shuffleCards() {
     for (let index = state.cards.length; index > 0; index--) {
       let randomIndex = Math.floor(Math.random() * index);
 
@@ -75,22 +103,39 @@ export const actions = {
     }
   },
 
+  setGameMode(routeName) {
+    const gameName = routeName.slice(5);
+    state.gamemode = gameName;
+  },
+
+  checkAnswer(option) {
+    let answer;
+
+    if (state.gamemode === "pickASuit") {
+      answer = options[state.scoreStreak][option].toLowerCase();
+
+      switch (state.scoreStreak) {
+        case 0:
+          return answer === computeds.currentCard.value.color;
+        case 1:
+          return isHigherOrLower(answer);
+        case 2:
+          return isInOrOut(answer);
+        case 3:
+          return chooseSuit(answer);
+      }
+    } else {
+      answer = options[0][option].toLowerCase();
+      return answer === computeds.currentCard.value.color;
+    }
+  },
+
   nextCard(option) {
     // right or left
-    const cardColor = computeds.currentCard.value.color; // red or black
     const { createNotification } = useNotifications();
-    let chosenColor;
+    let isCorrect = actions.checkAnswer(option);
 
-    switch (option) {
-      case "left":
-        chosenColor = "red";
-        break;
-      case "right":
-        chosenColor = "black";
-        break;
-    }
-
-    if (chosenColor === cardColor) {
+    if (isCorrect) {
       // CORRECT
       state.scoreStreak += 1;
       createNotification({ type: "correct", message: "Eyyyyyyy sickk" });
@@ -112,6 +157,8 @@ export const actions = {
     });
   }
 };
+
+export const key = Symbol("CardsStore");
 
 export function provideCards() {
   provide(key, {

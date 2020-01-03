@@ -2,7 +2,7 @@
   <nav v-if="isHome" class="menu">
     <ul>
       <li
-        class="menu-list-item"
+        class="menu-list-item relative"
         v-for="(item, index) in menuItems"
         :key="index"
         v-ripple
@@ -59,8 +59,8 @@ export default {
         description: "Uitleg hier",
         to: "/red-or-black"
       },
-      { label: "Pick a suit", description: "Uitleg hier", to: "/red-or-black" }
-      // { label: "Suckkkk", description: "Uitleg hier", to: "/red-or-black" }
+      { label: "Pick a suit", description: "Uitleg hier", to: "/pick-a-suit" },
+      { label: "Dierenspel", description: "Uitleg hier", to: "/red-or-black" }
     ];
     const { router, route } = useRouter(context);
     const isHome = computed(() => {
