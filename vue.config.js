@@ -9,6 +9,10 @@ module.exports = {
       display: "standalone",
       background_color: "#3fad4d",
       orientation: "portrait"
+    },
+    workboxOptions: {
+      exclude: [/\.map$/, /^manifest.*\.js$/, /_redirects/]
+      // skipWaiting: true
     }
   },
 
