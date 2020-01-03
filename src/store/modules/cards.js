@@ -50,6 +50,18 @@ export let state = reactive(initialState());
 
 export const computeds = {
   currentCard: computed(() => state.cards[state.cardIdx]),
+  currentCardRankIdx: computed(() => {
+    return ranks.findIndex(_rank => _rank === computeds.currentCard.value.rank);
+  }),
+  prevCard: computed(() => {
+    if (state.playedCards.length > 0) {
+      return state.playedCards.slice(state.playedCards.length - 1);
+    }
+    return null;
+  }),
+  prevCardRankIdx: computed(() => {
+    return ranks.findIndex(_rank => _rank === computeds.prevCard.value[0].rank);
+  }),
   cardsOnTable: computed(() => {
     if (state.gamemode === "redOrBlack") {
       return state.playedCards.slice(Math.max(state.playedCards.length - 5, 0));
@@ -66,12 +78,46 @@ export const computeds = {
     } else if (state.gamemode === "pickASuit") {
       return options[state.scoreStreak];
     }
+  }),
+  displaySuits: computed(() => {
+    console.log(state.gamemode === "pickASuit", computeds.cardsOnTable.value);
+    return (
+      state.gamemode === "pickASuit" &&
+      computeds.cardsOnTable.value.length === 3
+    );
   })
 };
 
-function isHigherOrLower(answer) {}
-function isInOrOut(answer) {}
-function chooseSuit(answer) {}
+function isHigherOrLower(answer) {
+  const { currentCardRankIdx, prevCardRankIdx } = computeds;
+
+  if (answer === "higher") {
+    return currentCardRankIdx.value >= prevCardRankIdx.value;
+  }
+
+  return currentCardRankIdx.value <= prevCardRankIdx.value;
+}
+function isInOrOut(answer) {
+  const { currentCardRankIdx, prevCardRankIdx } = computeds;
+  const firstCardRankIdx = ranks.findIndex(
+    _rank => _rank === computeds.cardsOnTable.value[0].rank
+  );
+
+  if (answer === "in") {
+    return (
+      currentCardRankIdx.value >= firstCardRankIdx ||
+      currentCardRankIdx.value <= prevCardRankIdx.value
+    );
+  }
+  return (
+    currentCardRankIdx.value <= firstCardRankIdx ||
+    currentCardRankIdx.value >= prevCardRankIdx.value
+  );
+}
+function chooseSuit(answer) {
+  const suit = computeds.currentCard.value.suit;
+  return suit === answer;
+}
 
 export const actions = {
   buildDeck() {
@@ -111,7 +157,8 @@ export const actions = {
   checkAnswer(option) {
     let answer;
 
-    if (state.gamemode === "pickASuit") {
+    if (state.gamemode === "pickASuit" && state.scoreStreak < 4) {
+      // check which option was picked by "left" or "right"in the options array
       answer = options[state.scoreStreak][option].toLowerCase();
 
       switch (state.scoreStreak) {
@@ -137,8 +184,14 @@ export const actions = {
 
     if (isCorrect) {
       // CORRECT
-      state.scoreStreak += 1;
       createNotification({ type: "correct", message: "Eyyyyyyy sickk" });
+
+      if (state.scoreStreak === 3) {
+        state.winStreak++;
+        state.scoreStreak = 0;
+      } else {
+        state.scoreStreak += 1;
+      }
       // show notification
     } else {
       // state.cardsOnTable.slice(0);

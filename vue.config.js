@@ -7,8 +7,7 @@ module.exports = {
     manifestOptions: {
       short_name: "BlazeGames",
       display: "standalone",
-      background_color: "#3fad4d",
-      orientation: "portrait"
+      background_color: "#3fad4d"
     },
     workboxOptions: {
       exclude: [/\.map$/, /^manifest.*\.js$/, /_redirects/]
@@ -28,7 +27,5 @@ module.exports = {
       .end()
       .use("vue-svg-loader")
       .loader("vue-svg-loader");
-
-    // console.log(svgRule.uses);
   }
 };

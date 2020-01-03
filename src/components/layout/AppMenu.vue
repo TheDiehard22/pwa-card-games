@@ -9,7 +9,9 @@
       >
         <router-link class="menu-list-link" :to="item.to">
           <span class="block font-medium">{{ item.label }}</span>
-          <span class="block">{{ item.description }}</span>
+          <span class="block text-xs opacity-75 uppercase font-bold">{{
+            item.description
+          }}</span>
         </router-link>
       </li>
     </ul>
@@ -22,7 +24,9 @@
       </span>
 
       <span>
-        <b class="font-bold">{{ scoreStreak }}</b>
+        <b class="font-bold">{{
+          gamemode === "pickASuit" ? winStreak : scoreStreak
+        }}</b>
         in a row
       </span>
     </div>
@@ -56,17 +60,32 @@ export default {
     const menuItems = [
       {
         label: "Red or Black",
-        description: "Uitleg hier",
+        description: "Just red or black",
         to: "/red-or-black"
       },
-      { label: "Pick a suit", description: "Uitleg hier", to: "/pick-a-suit" },
-      { label: "Dierenspel", description: "Uitleg hier", to: "/red-or-black" }
+      {
+        label: "Pick a Suit",
+        description: "Test your skills ",
+        to: "/pick-a-suit"
+      },
+      {
+        label: "Animal Game",
+        description: "Say a word that begins with the provided letter",
+        to: "/red-or-black"
+      }
     ];
     const { router, route } = useRouter(context);
     const isHome = computed(() => {
       return route.value.name === "home";
     });
-    const { cardsOnTable, playedCards, scoreStreak, cardsLeft } = useCards();
+    const {
+      cardsOnTable,
+      playedCards,
+      scoreStreak,
+      cardsLeft,
+      gamemode,
+      winStreak
+    } = useCards();
 
     return {
       menuItems,
@@ -74,7 +93,9 @@ export default {
       cardsOnTable,
       playedCards,
       scoreStreak,
-      cardsLeft
+      cardsLeft,
+      gamemode,
+      winStreak
     };
   }
 };

@@ -1,15 +1,49 @@
 <template>
   <div class="home flex flex-col h-full p-4">
     <swipe-confirmation
-      class="z-1"
+      class="z-1 select-none"
       :percentage-complete="offsetPercentage"
     ></swipe-confirmation>
-    <div class="flex flex-col flex-grow items-center">
+    <div class="flex flex-col flex-grow items-center z-10">
       <!-- <button class="z-10" @click="nextCard('right')">Blackkkk</button> -->
       <span class="game-question text-2xl font-bold mb-6 mt-2">
         {{ currentOption.question }}
       </span>
-      <base-card :styles="cardStyles" ref="cardRef" :small="false"></base-card>
+      <base-card
+        v-if="!displaySuits"
+        :styles="cardStyles"
+        ref="cardRef"
+        :small="false"
+      ></base-card>
+      <div
+        class="text-black text-4xl bg-white shadow-lg flex flex-wrap w-full rounded"
+        v-else
+      >
+        <div
+          class="w-1/2 h-12 flex items-center justify-center text-red-600"
+          @click="nextCard('topleft')"
+        >
+          ♥
+        </div>
+        <div
+          class="w-1/2 h-12 flex items-center justify-center"
+          @click="nextCard('topright')"
+        >
+          ♠
+        </div>
+        <div
+          class="w-1/2 h-12 flex items-center justify-center"
+          @click="nextCard('bottomleft')"
+        >
+          ♣
+        </div>
+        <div
+          class="w-1/2 h-12 flex items-center justify-center text-red-600"
+          @click="nextCard('bottomright')"
+        >
+          ♦
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -42,7 +76,8 @@ export default {
       cardsLeft,
       resetDeck,
       setGameMode,
-      currentOption
+      currentOption,
+      displaySuits
     } = useCards();
     const { route } = useRouter(context);
     const { offsetPercentage } = useDrag(cardRef, nextCard);
@@ -80,7 +115,8 @@ export default {
       scoreStreak,
       cardsLeft,
       resetDeck,
-      currentOption
+      currentOption,
+      displaySuits
     };
   }
 };
