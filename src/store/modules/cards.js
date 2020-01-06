@@ -42,8 +42,9 @@ const initialState = () => ({
   playedCards: [],
   scoreStreak: 0, // given per correct card
   winStreak: 0, // given per correct set
-  cardIdx: 0,
-  gamemode: undefined //redOrBlack, pickASuit
+  loseStreak: 0, // given per wrong chosen card
+  cardIdx: 0, // takes a card from the cards array
+  gamemode: undefined // redOrBlack, pickASuit
 });
 
 export let state = reactive(initialState());
@@ -80,7 +81,6 @@ export const computeds = {
     }
   }),
   displaySuits: computed(() => {
-    console.log(state.gamemode === "pickASuit", computeds.cardsOnTable.value);
     return (
       state.gamemode === "pickASuit" &&
       computeds.cardsOnTable.value.length === 3
@@ -181,10 +181,12 @@ export const actions = {
     // right or left
     const { createNotification } = useNotifications();
     let isCorrect = actions.checkAnswer(option);
+    let notificationObj = {};
 
     if (isCorrect) {
       // CORRECT
-      createNotification({ type: "correct", message: "Eyyyyyyy sickk" });
+      state.loseStreak = 0;
+      notificationObj.type = "correct";
 
       if (state.scoreStreak === 3) {
         state.winStreak++;
@@ -194,11 +196,16 @@ export const actions = {
       }
       // show notification
     } else {
-      // state.cardsOnTable.slice(0);
-      createNotification({ type: "wrong", message: "Haha n00b" });
       state.scoreStreak = 0;
+      state.loseStreak++;
+      notificationObj.type = "wrong";
     }
-    // console.log(state.playedCards);
+
+    notificationObj.scoreStreak = state.scoreStreak;
+    notificationObj.loseStreak = state.loseStreak;
+    createNotification(notificationObj);
+
+    // push the current card to the top of the playedCards "pile"
     state.playedCards.push(computeds.currentCard.value);
     state.cardIdx++;
   },

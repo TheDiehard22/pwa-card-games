@@ -1,20 +1,28 @@
 {
-  "correct": [
-    "Eyyy sickk",
-    "Hij heeft m hoor",
-    "Geniet er van",
-    "ezpz"
-  ],
-  "wrong": [
-    "N00b",
-    "Get rekt",
-    "Smoke up",
-    "kutspel"
-  ],
-  "deathStreak": [
-    "Leef je nog?",
-    "Choochooo all aboard the blaze train",
-    "Kuchkuch"
-  ],
-  "winStreak": []
+  "correct": {
+    "default": [
+      "Eyyy sickk",
+      "Got em good",
+      "Geniet er van",
+      "ezpz",
+      "Te makkelijk",
+    ],
+    "streak": [
+      "Gaat lekker denk"
+    ]
+  },
+  "wrong": {
+    "default": [
+      "N00b",
+      "Get rekt",
+      "Smoke up",
+      "kutspel",
+      ""
+    ],
+    "streak": [
+      "Leef je nog?",
+      "Choochooo all aboard the blaze train",
+      "Kuchkuch"
+    ]
+  }
 }

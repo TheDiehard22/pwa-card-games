@@ -9,9 +9,9 @@
       >
         <router-link class="menu-list-link" :to="item.to">
           <span class="block font-medium">{{ item.label }}</span>
-          <span class="block text-xs opacity-75 uppercase font-bold">{{
-            item.description
-          }}</span>
+          <span class="block text-xs opacity-75 uppercase font-bold">
+            {{ item.description }}
+          </span>
         </router-link>
       </li>
     </ul>
@@ -24,9 +24,16 @@
       </span>
 
       <span>
-        <b class="font-bold">{{
-          gamemode === "pickASuit" ? winStreak : scoreStreak
-        }}</b>
+        <b class="font-bold">
+          {{ gamemode === "pickASuit" ? winStreak : scoreStreak }}
+        </b>
+        <span>
+          {{
+            gamemode === "pickASuit"
+              ? `win${winStreak > 1 ? "s" : ""}`
+              : "cards"
+          }}
+        </span>
         in a row
       </span>
     </div>

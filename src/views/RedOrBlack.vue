@@ -10,14 +10,14 @@
         {{ currentOption.question }}
       </span>
       <base-card
-        v-if="!displaySuits"
+        v-show="!displaySuits"
         :styles="cardStyles"
         ref="cardRef"
         :small="false"
       ></base-card>
       <div
         class="text-black text-4xl bg-white shadow-lg flex flex-wrap w-full rounded"
-        v-else
+        v-show="displaySuits"
       >
         <div
           class="w-1/2 h-12 flex items-center justify-center text-red-600"
