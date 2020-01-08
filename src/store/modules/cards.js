@@ -208,6 +208,8 @@ export const actions = {
     // push the current card to the top of the playedCards "pile"
     state.playedCards.push(computeds.currentCard.value);
     state.cardIdx++;
+
+    return { isCorrect };
   },
 
   resetDeck() {

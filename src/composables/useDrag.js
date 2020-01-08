@@ -11,16 +11,17 @@ export function useDrag(el = ref(null), swipeCb = null) {
   const offsetPercentage = computed(() => (distance.value / maxDistance) * 100);
   let distance = ref(0);
   let panEnded = ref(false);
+  let lastSwipeDirection = ref(null);
 
   function swipeAction() {
     const swipeDirection = offsetPercentage.value >= 0 ? "right" : "left";
     // convert negative number to positive
     if (Math.abs(offsetPercentage.value) > minimalPercentage) {
-      // execute callback when you swiped enough righ or left
-      if (!swipeCb) {
-        return console.warn("No callback received.");
-      }
-      swipeCb(swipeDirection);
+      lastSwipeDirection.value = swipeDirection;
+
+      setTimeout(() => {
+        lastSwipeDirection.value = null;
+      }, 1000);
     }
   }
 
@@ -43,12 +44,13 @@ export function useDrag(el = ref(null), swipeCb = null) {
         panEnded = true;
         swipeAction();
         distance.value = 0;
-        console.log("pan ended");
+        console.log("pan ended at swipe direction: ", lastSwipeDirection.value);
       });
     }
   });
 
   return {
-    offsetPercentage
+    offsetPercentage,
+    lastSwipeDirection
   };
 }

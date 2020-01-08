@@ -54,6 +54,7 @@ import BaseCard from "../components/BaseCard.vue";
 import SwipeConfirmation from "@/components/SwipeConfirmation.vue";
 import { ref, onMounted, computed, watch } from "@vue/composition-api";
 import { useDrag } from "@/composables/useDrag";
+import { useSound } from "@/composables/useSound";
 import { useRouter } from "@/composables/route.js";
 
 export default {
@@ -80,7 +81,8 @@ export default {
       displaySuits
     } = useCards();
     const { route } = useRouter(context);
-    const { offsetPercentage } = useDrag(cardRef, nextCard);
+    const { offsetPercentage, lastSwipeDirection } = useDrag(cardRef);
+    const { play } = useSound();
     const cardStyles = computed(() => {
       const transform = {
         transform: `translateX(${
@@ -90,7 +92,8 @@ export default {
 
       return [transform];
     });
-    const cardsLength = watch(cardsLeft, () => {
+
+    watch(cardsLeft, () => {
       if (cardsLeft.value === 0) {
         resetDeck();
         buildDeck();
@@ -101,6 +104,13 @@ export default {
 
     watch(route, (val, oldVal) => {
       setGameMode(route.value.name);
+    });
+
+    watch(lastSwipeDirection, val => {
+      if (val) {
+        const { isCorrect } = nextCard(val);
+        play(isCorrect);
+      }
     });
 
     return {
