@@ -1,17 +1,20 @@
-import { ref } from "@vue/composition-api";
-
 export function useSound() {
   const audioContext = new AudioContext();
   const sounds = {
     correct: ["audio/ha-got-eeem.mp3"],
     wrong: ["audio/hitmarker_2.mp3"]
   };
-  let source = ref(null);
+  let source;
+  let buffers = {
+    correct: null,
+    wrong: null
+  };
 
-  function getSound(isCorrect) {
+  function loadSound(isCorrect) {
+    console.log("getsound trigger");
     const soundToPlay = isCorrect ? sounds.correct[0] : sounds.wrong[0];
     let request = new XMLHttpRequest();
-    source.value = audioContext.createBufferSource();
+    source = audioContext.createBufferSource();
 
     request.open("GET", soundToPlay, true);
     request.responseType = "arraybuffer";
@@ -19,24 +22,36 @@ export function useSound() {
     request.onload = () => {
       let audioData = request.response;
 
-      audioContext.decodeAudioData(
-        audioData,
-        buffer => {
-          source.value.buffer = buffer;
-          source.value.connect(audioContext.destination);
-          source.value.loop = false;
-        },
-        err => console.log("Error with decoding audio data" + err.err)
-      );
+      audioContext
+        .decodeAudioData(audioData)
+        .then(buffer => {
+          source.buffer = buffer;
+          source.connect(audioContext.destination);
+
+          // remembers buffer for next playbacks
+          if (!buffers[isCorrect ? "correct" : "wrong"]) {
+            buffers[isCorrect ? "correct" : "wrong"] = source.buffer;
+          }
+        })
+        .catch(err => console.log("Error with decoding audio data" + err.err));
     };
 
     request.send();
   }
 
+  function loadSoundFromExistingBuffer(isCorrect) {
+    console.log("loading existing sound buffer.");
+    source = audioContext.createBufferSource();
+    source.buffer = buffers[isCorrect ? "correct" : "wrong"];
+    source.connect(audioContext.destination);
+  }
+
   function play(isCorrect) {
-    getSound(isCorrect);
-    console.log(source.value);
-    source.value.start();
+    buffers[isCorrect ? "correct" : "wrong"]
+      ? loadSoundFromExistingBuffer(isCorrect)
+      : loadSound(isCorrect);
+
+    source.start();
   }
 
   return {

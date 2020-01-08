@@ -105,7 +105,7 @@ function isInOrOut(answer) {
 
   if (answer === "in") {
     return (
-      currentCardRankIdx.value >= firstCardRankIdx ||
+      currentCardRankIdx.value >= firstCardRankIdx &&
       currentCardRankIdx.value <= prevCardRankIdx.value
     );
   }

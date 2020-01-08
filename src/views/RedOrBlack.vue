@@ -21,25 +21,25 @@
       >
         <div
           class="w-1/2 h-12 flex items-center justify-center text-red-600"
-          @click="nextCard('topleft')"
+          @click="nextTurn('topleft')"
         >
           ♥
         </div>
         <div
           class="w-1/2 h-12 flex items-center justify-center"
-          @click="nextCard('topright')"
+          @click="nextTurn('topright')"
         >
           ♠
         </div>
         <div
           class="w-1/2 h-12 flex items-center justify-center"
-          @click="nextCard('bottomleft')"
+          @click="nextTurn('bottomleft')"
         >
           ♣
         </div>
         <div
           class="w-1/2 h-12 flex items-center justify-center text-red-600"
-          @click="nextCard('bottomright')"
+          @click="nextTurn('bottomright')"
         >
           ♦
         </div>
@@ -93,6 +93,11 @@ export default {
       return [transform];
     });
 
+    function nextTurn(actionName) {
+      const { isCorrect } = nextCard(actionName);
+      play(isCorrect);
+    }
+
     watch(cardsLeft, () => {
       if (cardsLeft.value === 0) {
         resetDeck();
@@ -107,10 +112,7 @@ export default {
     });
 
     watch(lastSwipeDirection, val => {
-      if (val) {
-        const { isCorrect } = nextCard(val);
-        play(isCorrect);
-      }
+      val && nextTurn(val);
     });
 
     return {
@@ -126,7 +128,8 @@ export default {
       cardsLeft,
       resetDeck,
       currentOption,
-      displaySuits
+      displaySuits,
+      nextTurn
     };
   }
 };
