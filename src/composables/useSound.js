@@ -1,7 +1,7 @@
 export function useSound() {
   const audioContext = new AudioContext();
   const sounds = {
-    correct: ["audio/ha-got-eeem.mp3"],
+    correct: ["audio/wow-mlg-sound-effect.mp3"],
     wrong: ["audio/hitmarker_2.mp3"]
   };
   let source;

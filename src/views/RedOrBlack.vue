@@ -16,32 +16,32 @@
         :small="false"
       ></base-card>
       <div
-        class="text-black text-4xl bg-white shadow-lg flex flex-wrap w-full rounded"
+        class="text-black text-4xl bg-white shadow-lg flex flex-wrap self-stretch mx-10 rounded"
         v-show="displaySuits"
       >
         <div
-          class="w-1/2 h-12 flex items-center justify-center text-red-600"
+          class="w-1/2 h-12 py-8 flex items-center justify-center text-red-600"
           @click="nextTurn('topleft')"
         >
-          ♥
+          <span class="block">♥</span>
         </div>
         <div
-          class="w-1/2 h-12 flex items-center justify-center"
+          class="w-1/2 h-12 py-8 flex items-center justify-center"
           @click="nextTurn('topright')"
         >
-          ♠
+          <span class="block">♠</span>
         </div>
         <div
-          class="w-1/2 h-12 flex items-center justify-center"
+          class="w-1/2 h-12 py-8 flex items-center justify-center"
           @click="nextTurn('bottomleft')"
         >
-          ♣
+          <span class="block">♣</span>
         </div>
         <div
-          class="w-1/2 h-12 flex items-center justify-center text-red-600"
+          class="w-1/2 h-12 py-8 flex items-center justify-center text-red-600"
           @click="nextTurn('bottomright')"
         >
-          ♦
+          <span class="block">♦</span>
         </div>
       </div>
     </div>

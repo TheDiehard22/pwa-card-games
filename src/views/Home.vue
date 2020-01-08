@@ -1,6 +1,6 @@
 <template>
-  <div class="home px-6">
-    <p class="text-lg mt-2">
+  <div class="home px-4">
+    <p class="text-lg">
       Welkom bij de BlazeGames - een collectie van spellen voor tijdens het
       roken van jonkos.
     </p>
