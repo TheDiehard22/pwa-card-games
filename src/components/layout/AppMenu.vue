@@ -72,7 +72,7 @@ export default {
       },
       {
         label: "Pick a Suit",
-        description: "Test your skills ",
+        description: "Test your luck ",
         to: "/pick-a-suit"
       },
       {

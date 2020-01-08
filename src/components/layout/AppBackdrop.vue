@@ -1,5 +1,8 @@
 <template>
-  <div class="backdrop" :class="backgroundClass">
+  <div class="backdrop" :class="backgroundClasses">
+    <div v-show="!inGame" class="backdrop-dragarea">
+      <span class="backdrop-dragline"></span>
+    </div>
     <div ref="playareaRef" class="backdrop-playarea">
       <slot></slot>
     </div>
@@ -21,8 +24,10 @@ export default {
     });
     const isOpen = ref(false);
     const { route, inGame } = useRouter(context);
-    const backgroundClass = computed(() =>
-      context.root.$route.name === "home" ? "bg-white" : "bg-gray-900"
+    const backgroundClasses = computed(() =>
+      context.root.$route.name === "home"
+        ? "bg-white"
+        : ["bg-gray-900", "text-white"]
     );
     const isOpenn = computed(() => {
       if (route.value.name) return isOpen.value || inGame.value;
@@ -60,7 +65,7 @@ export default {
       }
     }
 
-    return { isOpen, isOpenn, backgroundClass, playareaRef };
+    return { isOpen, isOpenn, backgroundClasses, playareaRef, inGame };
   }
 };
 </script>

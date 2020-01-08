@@ -6,5 +6,18 @@
   top: 0;
   transition: ease-in-out 0.3s all;
   overflow: hidden;
-  @apply fixed h-full w-full shadow-md text-white;
+  @apply fixed h-full w-full shadow-md;
+
+  &-dragarea {
+    height: 40px;
+    @apply flex justify-center items-center w-full relative;
+  }
+
+  &-dragline {
+    width: 40%;
+    background-color: #eee;
+    height: 4px;
+    border-radius: 100px;
+    @apply inline-flex;
+  }
 }

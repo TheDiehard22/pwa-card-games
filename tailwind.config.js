@@ -10,7 +10,7 @@ module.exports = {
         },
 
         text: {
-          default: "#183D0F"
+          default: "#0c2307"
         },
 
         background: {
