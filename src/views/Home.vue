@@ -1,9 +1,14 @@
 <template>
   <div class="home px-4">
-    <p class="text-lg">
-      Welkom bij de BlazeGames - een collectie van spellen voor tijdens het
-      roken van jonkos.
+    <p class="text-lg mb-4">
+      Welcome to the BlazeGames - a collection of games for playing while
+      smoking a joink.
     </p>
+
+    <div class="banner bg-gray-200 rounded p-4">
+      <span class="title font-bold">What's new</span>
+      <p class="">Added MLG sounds to the card games.</p>
+    </div>
   </div>
 </template>
 

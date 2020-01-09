@@ -1,5 +1,6 @@
 import Vue from "vue";
 import { ref, reactive, toRefs, computed } from "@vue/composition-api";
+import { shuffle } from "lodash-es";
 
 const ranks = [
   "A",
@@ -45,15 +46,17 @@ export function useCards() {
   shuffleCards();
 
   function shuffleCards() {
-    for (let index = state.cards.length; index > 0; index--) {
-      let randomIndex = Math.floor(Math.random() * index);
+    // for (let index = state.cards.length; index > 0; index--) {
+    //   let randomIndex = Math.floor(Math.random() * index);
 
-      let temp = state.cards[index];
-      if (temp) {
-        Vue.set(state.cards, index, state.cards[randomIndex]);
-        Vue.set(state.cards, randomIndex, temp);
-      }
-    }
+    //   let temp = state.cards[index];
+    //   if (temp) {
+    //     Vue.set(state.cards, index, state.cards[randomIndex]);
+    //     Vue.set(state.cards, randomIndex, temp);
+    //   }
+    // }
+
+    shuffle(state.cards);
   }
 
   function nextCard(option) {

@@ -71,7 +71,7 @@ export default {
         to: "/red-or-black"
       },
       {
-        label: "Pick a Suit",
+        label: "Pick-a-suit",
         description: "Test your luck ",
         to: "/pick-a-suit"
       },
