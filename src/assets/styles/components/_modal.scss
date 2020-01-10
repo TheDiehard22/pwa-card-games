@@ -1,0 +1,13 @@
+.modal {
+  @apply w-full h-full bg-white rounded;
+
+  &-background {
+    backdrop-filter: blur(4px);
+    // background-color: rgba(0, 0, 0, 0.2);
+    @apply absolute top-0 h-full w-full p-6;
+  }
+
+  &-heading {
+    @apply text-2xl font-bold;
+  }
+}

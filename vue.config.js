@@ -7,7 +7,16 @@ module.exports = {
     manifestOptions: {
       short_name: "BlazeGames",
       display: "standalone",
-      background_color: "#3fad4d"
+      background_color: "#3fad4d",
+      share_target: {
+        action: "/share-target/",
+        method: "GET",
+        params: {
+          title: "title",
+          text: "text",
+          url: "url"
+        }
+      }
     },
     workboxOptions: {
       exclude: [/\.map$/, /^manifest.*\.js$/, /_redirects/]

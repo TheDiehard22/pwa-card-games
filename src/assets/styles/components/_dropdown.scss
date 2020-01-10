@@ -1,0 +1,26 @@
+.dropdown {
+  width: 12em;
+  z-index: 100000;
+  transform-origin: top right;
+
+  @apply absolute top-0 right-0;
+  @apply bg-white shadow-lg rounded;
+
+  &-listitem {
+    @apply flex py-2 px-4 justify-between;
+  }
+}
+
+.dropdown {
+  &-enter,
+  &-leave-to {
+    opacity: 0;
+    transform: scale(0);
+    transform-origin: top right;
+  }
+
+  &-enter-active,
+  &-leave-active {
+    transition: ease-in transform 0.1s, opacity linear 0.1s;
+  }
+}

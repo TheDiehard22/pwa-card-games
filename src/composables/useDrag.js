@@ -3,7 +3,7 @@ import { unwrap } from "./utils";
 import { computed, ref, toRefs, onMounted } from "@vue/composition-api";
 import { throttle } from "lodash-es";
 
-export function useDrag(el = ref(null), swipeCb = null) {
+export function useDrag(el = ref(null)) {
   let hammer;
 
   const maxDistance = 130;

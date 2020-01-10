@@ -1,11 +1,12 @@
 <template>
-  <div class="toolbar-icon mr-4" v-ripple>
+  <div class="toolbar-icon" v-ripple>
     <transition name="icon-swap" class="relative">
       <component
         :key="currentIcon"
         :is="currentIcon"
         class="toolbar-hamburger"
-        @click="onClick()"
+        :class="[fillHeight ? 'w-full h-full' : '']"
+        @click="onClick($event)"
       ></component>
     </transition>
   </div>
@@ -20,16 +21,26 @@ import { useRouter, router } from "@/composables/route";
 import menuIcon from "@/assets/svg/icons/inline.icon-menu.svg";
 import backIcon from "@/assets/svg/icons/inline.icon-cheveron-left.svg";
 import closeIcon from "@/assets/svg/icons/inline.icon-close.svg";
+import dotsIcon from "@/assets/svg/icons/inline.icon-dots-vertical.svg";
 
 import EventBus from "@/event-bus.js";
 
 export default {
   name: "ToolbarNavIcon",
-  props: {},
+  props: {
+    icon: {
+      type: String
+    },
+    fillHeight: {
+      type: Boolean,
+      default: false
+    }
+  },
   components: {
     menuIcon,
     backIcon,
-    closeIcon
+    closeIcon,
+    dotsIcon
   },
 
   setup(props, context) {
@@ -37,13 +48,17 @@ export default {
     const { resetDeck } = useCards();
     const currentIcon = computed(() => {
       // console.log(inGame.value);
-      if (inGame.value) return "backIcon";
+      if (inGame.value && !props.icon) return "backIcon";
+      else if (props.icon) return props.icon;
       // else if () check if menu is open with useMenu hook
 
       return "menuIcon";
     });
 
-    function onClick() {
+    function onClick(evt) {
+      const { emit } = context;
+      emit("click", evt);
+
       switch (currentIcon.value) {
         case "backIcon":
           router.push("/");
@@ -51,7 +66,6 @@ export default {
           break;
         case "menuIcon":
         case "closeIcon":
-          openMenu();
         default:
           break;
       }
