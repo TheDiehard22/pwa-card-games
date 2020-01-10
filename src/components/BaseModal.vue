@@ -1,18 +1,20 @@
 <template>
-  <transition name="modal">
+  <transition name="modal-bg">
     <div v-show="isOpen" class="modal-background">
-      <div class="modal">
-        <component :is="modalComponent">
-          <template v-slot:icon>
-            <toolbar-nav-icon
-              icon="closeIcon"
-              fill-height
-              class="h-8 w-8"
-              @click="close"
-            ></toolbar-nav-icon>
-          </template>
-        </component>
-      </div>
+      <transition name="modal">
+        <div v-show="isOpen" class="modal">
+          <component :is="modalComponent">
+            <template v-slot:icon>
+              <toolbar-nav-icon
+                icon="closeIcon"
+                fill-height
+                class="h-8 w-8"
+                @click="close"
+              ></toolbar-nav-icon>
+            </template>
+          </component>
+        </div>
+      </transition>
     </div>
   </transition>
 </template>

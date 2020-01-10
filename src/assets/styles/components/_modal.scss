@@ -2,12 +2,36 @@
   @apply w-full h-full bg-white rounded;
 
   &-background {
-    backdrop-filter: blur(4px);
+    background-color: rgba(0, 0, 0, 0.4);
     // background-color: rgba(0, 0, 0, 0.2);
-    @apply absolute top-0 h-full w-full p-6;
+    @apply absolute top-0 h-full w-full p-4;
   }
 
   &-heading {
     @apply text-2xl font-bold;
+  }
+}
+
+.modal-bg {
+  &-enter,
+  &-leave-to {
+    opacity: 0;
+  }
+
+  &-enter-active,
+  &-leave-active {
+    transition: opacity linear 0.3s;
+  }
+}
+
+.modal {
+  &-enter,
+  &-leave-to {
+    transform: translateY(100px) scaleX(0.9);
+  }
+
+  &-enter-active,
+  &-leave-active {
+    transition: transform cubic-bezier(0.86, 0, 0.07, 1) 0.4s;
   }
 }

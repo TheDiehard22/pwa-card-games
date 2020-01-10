@@ -65,6 +65,8 @@ export default {
           resetDeck();
           break;
         case "menuIcon":
+          openMenu();
+          break;
         case "closeIcon":
         default:
           break;
