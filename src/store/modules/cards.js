@@ -8,6 +8,7 @@ import {
 } from "@vue/composition-api";
 import Vue from "vue";
 import { useNotifications } from "@/composables/useNotification.js";
+import { shuffle } from "lodash-es";
 
 const ranks = [
   "A",
@@ -138,15 +139,16 @@ export const actions = {
   },
 
   shuffleCards() {
-    for (let index = state.cards.length; index > 0; index--) {
-      let randomIndex = Math.floor(Math.random() * index);
+    // for (let index = state.cards.length; index > 0; index--) {
+    //   let randomIndex = Math.floor(Math.random() * index);
 
-      let temp = state.cards[index];
-      if (temp) {
-        Vue.set(state.cards, index, state.cards[randomIndex]);
-        Vue.set(state.cards, randomIndex, temp);
-      }
-    }
+    //   let temp = state.cards[index];
+    //   if (temp) {
+    //     Vue.set(state.cards, index, state.cards[randomIndex]);
+    //     Vue.set(state.cards, randomIndex, temp);
+    //   }
+    // }
+    state.cards = shuffle(state.cards);
   },
 
   setGameMode(routeName) {

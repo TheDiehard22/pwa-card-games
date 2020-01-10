@@ -15,6 +15,8 @@ import AppBackground from "@/components/layout/AppBackground";
 import AppBackdrop from "@/components/layout/AppBackdrop";
 import AppNotifications from "@/components/layout/AppNotifications";
 import { provideCards } from "@/store/modules/cards";
+import { onMounted } from "@vue/composition-api";
+import { disableBodyScroll } from "body-scroll-lock";
 
 export default {
   components: {
@@ -25,6 +27,12 @@ export default {
 
   setup() {
     provideCards();
+
+    onMounted(() => {
+      const appEl = document.querySelector("#app");
+
+      disableBodyScroll(appEl);
+    });
   }
 };
 </script>

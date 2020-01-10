@@ -1,5 +1,6 @@
 export function useSound() {
-  const audioContext = new AudioContext();
+  const audioCtx = window.AudioContext || window.window.webkitAudioContext;
+  const audioContext = new audioCtx();
   const sounds = {
     correct: ["audio/wow-mlg-sound-effect.mp3"],
     wrong: ["audio/hitmarker_2.mp3"]
