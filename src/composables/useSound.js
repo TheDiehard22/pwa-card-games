@@ -1,7 +1,7 @@
 import { getRandomIntInclusive } from "@/helpers/math";
 
 export function useSound() {
-  const audioCtx = window.AudioContext || window.window.webkitAudioContext;
+  const audioCtx = window.AudioContext || window.webkitAudioContext;
   const audioContext = new audioCtx();
   const sounds = {
     correct: [

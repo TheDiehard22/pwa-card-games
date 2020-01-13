@@ -8,7 +8,13 @@ export function useDrag(el = ref(null)) {
 
   const maxDistance = 130;
   const minimalPercentage = 70;
-  const offsetPercentage = computed(() => (distance.value / maxDistance) * 100);
+  const offsetPercentage = computed(() => {
+    const maxPercentage = 100;
+    let percentage = (distance.value / maxDistance) * 100;
+    if (percentage > maxPercentage) percentage = maxPercentage;
+
+    return percentage;
+  });
   let distance = ref(0);
   let panEnded = ref(false);
   let lastSwipeDirection = ref(null);
@@ -18,6 +24,7 @@ export function useDrag(el = ref(null)) {
     // convert negative number to positive
     if (Math.abs(offsetPercentage.value) > minimalPercentage) {
       lastSwipeDirection.value = swipeDirection;
+      distance.value = 0;
 
       setTimeout(() => {
         lastSwipeDirection.value = null;
@@ -29,7 +36,7 @@ export function useDrag(el = ref(null)) {
     el = unwrap(el);
 
     if (el) {
-      el = el.$el;
+      // el = el.$el;
       hammer = new Hammer(el, { threshold: 0 });
 
       hammer.on(
@@ -43,7 +50,7 @@ export function useDrag(el = ref(null)) {
       hammer.on("panend", e => {
         panEnded = true;
         swipeAction();
-        distance.value = 0;
+
         console.log("pan ended at swipe direction: ", lastSwipeDirection.value);
       });
     }

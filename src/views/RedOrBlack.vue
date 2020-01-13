@@ -1,19 +1,23 @@
 <template>
   <div class="home flex flex-col h-full p-4">
-    <swipe-confirmation
+    <!-- <swipe-confirmation
       class="z-1 select-none"
       :percentage-complete="offsetPercentage"
-    ></swipe-confirmation>
+    ></swipe-confirmation> -->
+    <!-- -->
     <div class="flex flex-col flex-grow items-center z-10">
       <!-- <button class="z-10" @click="nextCard('right')">Blackkkk</button> -->
       <span class="game-question text-2xl font-bold mb-6 mt-2">
         {{ currentOption.question }}
       </span>
       <base-card
-        v-show="!displaySuits"
-        :styles="cardStyles"
         ref="cardRef"
+        v-show="!displaySuits"
         :small="false"
+        :suit="currentCard.suit"
+        :rank="currentCard.rank"
+        :color="currentCard.color"
+        @swiped="nextTurn"
       ></base-card>
       <div
         class="text-black text-4xl bg-white shadow-lg flex flex-wrap self-stretch mx-10 rounded"
@@ -61,12 +65,11 @@ export default {
   name: "RedOrBlack",
 
   components: {
-    BaseCard,
-    SwipeConfirmation
+    BaseCard
+    // SwipeConfirmation
   },
 
   setup(props, context) {
-    const cardRef = ref(null); // this is a template ref
     const {
       currentCard,
       shuffleCards,
@@ -81,17 +84,7 @@ export default {
       displaySuits
     } = useCards();
     const { route } = useRouter(context);
-    const { offsetPercentage, lastSwipeDirection } = useDrag(cardRef);
     const { play } = useSound();
-    const cardStyles = computed(() => {
-      const transform = {
-        transform: `translateX(${
-          offsetPercentage.value
-        }%) rotate(${offsetPercentage.value / 5}deg)`
-      };
-
-      return [transform];
-    });
 
     function nextTurn(actionName) {
       const { isCorrect } = nextCard(actionName);
@@ -111,19 +104,12 @@ export default {
       setGameMode(route.value.name);
     });
 
-    watch(lastSwipeDirection, val => {
-      val && nextTurn(val);
-    });
-
     return {
       cards,
       currentCard,
       shuffleCards,
       nextCard,
       buildDeck,
-      cardRef,
-      cardStyles,
-      offsetPercentage,
       scoreStreak,
       cardsLeft,
       resetDeck,

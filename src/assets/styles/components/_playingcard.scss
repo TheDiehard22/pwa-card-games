@@ -1,9 +1,11 @@
 .playingcard {
   height: 250px;
   width: 180px;
-  @apply flex items-center justify-center relative bg-white rounded p-2 shadow-md;
+  perspective: 1000px;
+  @apply text-black;
+  @apply flex items-center justify-center relative bg-white rounded shadow-md p-2;
 
-  &:not(.playingcard--back) {
+  &:not(.playingcard--flip) {
     transition: all linear 0.3s;
   }
 
@@ -16,12 +18,13 @@
     @apply text-red-700;
   }
 
-  &--back {
-    @apply flex shadow-xl;
+  &--flip {
+    // transition: transform 0.6s;
+    transform-style: preserve-3d;
+    @apply flex shadow-xl text-4xl;
   }
 
   &-suit {
-    font-size: 1rem;
     @apply absolute;
 
     &--top {
@@ -35,12 +38,27 @@
   }
 
   &-rank {
-    @apply font-bold text-2xl;
+    @apply font-bold;
   }
 
-  &-background {
+  &-inner {
+    @apply relative flex flex-grow self-stretch;
+  }
+
+  &-back,
+  &-front {
+    backface-visibility: hidden;
+    @apply absolute w-full h-full;
+  }
+
+  &-back {
     background-image: url("~@/assets/svg/card-bg.svg");
     @apply w-full h-full rounded;
+  }
+
+  &-front {
+    @apply flex items-center justify-center;
+    transform: rotateY(180deg);
   }
 }
 
