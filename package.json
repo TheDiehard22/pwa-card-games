@@ -16,7 +16,7 @@
     "body-scroll-lock": "^2.6.4",
     "core-js": "^3.4.3",
     "hammerjs": "^2.0.8",
-    "lodash-es": "^4.17.15",
+    "lodash-es": "^4.17.21",
     "register-service-worker": "^1.6.2",
     "tailwindcss": "^1.1.4",
     "vue": "^2.6.10",
